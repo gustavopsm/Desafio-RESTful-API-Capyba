@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>restapi</title>
+</head>
+<body>
+    <h1>Meu perfil</h1>
+
+    {{ user.username }}
+
+    <br>
+    <img src='../../../{{ user.profile.foto_perfil }}'></img>
+
+    {% if not user.profile.verificado %}
+    </a>
+    <a href="/usuarios/verificaremail">
+        <button>Verificar email</button>
+    </a>
+    {% else %}
+    <h3>voce está verificado, clique abaixo para ver conteudo exclusivo</h3>
+    </a>
+    <a href="../../../itemsprivados">
+        <button>conteudo privado</button>
+    </a>
+    {% endif %}
+    <br>
+    <br>
+    <form action='.' method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        <table>{{ form.as_table }}</table>
+        <input type="submit" value="Submit">
+        
+
+    </form>
+    <br>
+    <br>
+    <a href="/usuarios/mudarsenha">
+        <button>Mudar senha</button>
+    </a>
+    <a href="../../../menu">
+        <button>Voltar para menu</button>
+    </a>
+
+</body>
+</html>

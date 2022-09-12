@@ -1,0 +1,237 @@
+swagger: '2.0'
+info:
+  title: DesafioCapyba
+  description: ''
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: contact@snippets.local
+  license:
+    name: BSD License
+  version: v1
+host: localhost:8000
+schemes:
+  - http
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
+paths:
+  /items/:
+    get:
+      operationId: items_list
+      description: 'Shows all the public items'
+      parameters:
+        - name: name
+          in: query
+          description: 'Song name'
+          required: false
+          type: string
+        - name: album
+          in: query
+          description: 'Album name'
+          required: false
+          type: string
+        - name: duration
+          in: query
+          description: 'Music duration in ms'
+          required: false
+          type: number
+        - name: explicit
+          in: query
+          description: 'If the song is explicit or not'
+          required: false
+          type: string
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: Which field to use when ordering the results.
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Item'
+        tags:
+          - items
+    post:
+      operationId: items_create
+      description: 'Crate a public item'
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Item'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Item'
+      tags:
+        - items
+    parameters: []
+  /itemsprivados/:
+    get:
+      operationId: itemsprivados_list
+      description: 'Shows all the Private items'
+      parameters:
+        - name: name
+          in: query
+          description: 'Song name'
+          required: false
+          type: string
+        - name: album
+          in: query
+          description: 'Album name'
+          required: false
+          type: string
+        - name: duration
+          in: query
+          description: 'Music duration in ms'
+          required: false
+          type: number
+        - name: explicit
+          in: query
+          description: 'If the song is explicit or not'
+          required: false
+          type: string
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: Which field to use when ordering the results.
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/ItemPrivado'
+      tags:
+        - itemsprivados
+    post:
+      operationId: itemsprivados_create
+      description: 'Create an private item'
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ItemPrivado'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ItemPrivado'
+      tags:
+        - itemsprivados
+    parameters: []
+definitions:
+  Item:
+    type: object
+    properties:
+      name:
+        title: Name
+        type: string
+        maxLength: 50
+        minLength: 1
+      album:
+        title: Album
+        type: string
+        maxLength: 50
+        minLength: 1
+      duration:
+        title: Duration
+        type: integer
+      explicit:
+        title: Explicit
+        type: boolean
+  ItemPrivado:
+    type: object
+    properties:
+      name:
+        title: Name
+        type: string
+        maxLength: 50
+        minLength: 1
+      album:
+        title: Album
+        type: string
+        maxLength: 50
+        minLength: 1
+      duration:
+        title: Duration
+        type: integer
+      explicit:
+        title: Explicit
+        type: boolean
